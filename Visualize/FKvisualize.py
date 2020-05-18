@@ -53,7 +53,8 @@ class SixR:
                                [self.H0_5[0][3], self.H0_5[1][3], self.H0_5[2][3]],
                                [self.H0_6[0][3], self.H0_6[1][3], self.H0_6[2][3]],
                                ]
-        print(self.limb_vertecies)
+        print("End Effector Position (X,Y,Z): ")
+        print(self.limb_vertecies[5])
 
     def draw_limbs(self):
         limb_vectors = [[0, 0, 0]]
@@ -83,12 +84,12 @@ ax.set_xlabel('x (mm)')
 ax.set_ylabel('y (mm)')
 ax.set_zlabel('z (mm)')
 # robot.shift_body_rotation()
-T1 = float(input("Enter angle 1: "))
-T2 = float(input("Enter angle 2: "))
-T3 = float(input("Enter angle 3: "))
-T4 = float(input("Enter angle 4: "))
-T5 = float(input("Enter angle 5: "))
-T6 = float(input("Enter angle 6: "))
+T1 = float(input("Enter angle 1 (deg): "))
+T2 = float(input("Enter angle 2 (deg): "))
+T3 = float(input("Enter angle 3 (deg): "))
+T4 = float(input("Enter angle 4 (deg): "))
+T5 = float(input("Enter angle 5 (deg): "))
+T6 = float(input("Enter angle 6 (deg): "))
 
 robot = SixR(ax, theta=(90+T1, T2, T3, 90+T4, 90+T5, T6))
 robot.draw_limbs()
