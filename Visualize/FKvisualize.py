@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from numpy import *
 
 
-# Homogeneous Transformation Matrices
+# Homogeneous Transformation Matrices via Denavit-Hartenberg Method
 def transform_matrix(i, DHT):
     return [
         [cos(DHT[i][0]), -sin(DHT[i][0]) * cos(DHT[i][1]), sin(DHT[i][0]) * sin(DHT[i][1]),
@@ -12,7 +12,9 @@ def transform_matrix(i, DHT):
         [0, sin(DHT[i][1]), cos(DHT[i][1]), DHT[i][3]],
         [0, 0, 0, 1]]
 
-
+# class defines robot joint vertices and stores & plots vertex definition
+# in cartesian space relative to the origin of the base frame
+# those vertices get plotted within MPL's 3d visualization plotter using their plot function.
 class SixR:
 
     def __init__(self, ax,
@@ -21,26 +23,30 @@ class SixR:
         self.ax = ax
         self.limb_lengths = limb_lengths
         self.theta = theta  # theta angles in degrees
-
+# self.pt determines Denavit-Hartenberg Table using joint angle, rotational link offset, link offset,
+        # and link length, respectively
         self.pt = [[theta[0] / 180 * pi, pi / 2, 0, limb_lengths[0]],
                    [theta[1] / 180 * pi, 0, limb_lengths[2], limb_lengths[3] - limb_lengths[1]],
                    [theta[2] / 180 * pi, 0, limb_lengths[4], 0],
                    [theta[3] / 180 * pi, pi / 2, 0, -limb_lengths[5]],
                    [theta[4] / 180 * pi, pi / 2, 0, limb_lengths[6]],
                    [theta[5] / 180 * pi, 0, 0, limb_lengths[7]]]
-
+# self.fk determines link i frame and link i-1 frame transformation matrices
         self.fk = [transform_matrix(0, self.pt),
                    transform_matrix(1, self.pt),
                    transform_matrix(2, self.pt),
                    transform_matrix(3, self.pt),
                    transform_matrix(4, self.pt),
                    transform_matrix(5, self.pt)]
+# determination of transformation matrix for link i frame relative to base frame
         self.H0_1 = self.fk[0]
         self.H0_2 = dot(self.fk[0], self.fk[1])
         self.H0_3 = dot(self.H0_2, self.fk[2])
         self.H0_4 = dot(self.H0_3, self.fk[3])
         self.H0_5 = dot(self.H0_4, self.fk[4])
         self.H0_6 = dot(self.H0_5, self.fk[5])
+
+# stores limb vertex locations in x,y,z relative to base frame
         self.limb_vertecies = [[self.H0_1[0][3], self.H0_1[1][3], self.H0_1[2][3]],
                                [self.H0_2[0][3], self.H0_2[1][3], self.H0_2[2][3]],
                                [self.H0_3[0][3], self.H0_3[1][3], self.H0_3[2][3]],
@@ -51,6 +57,7 @@ class SixR:
         print("End Effector Position (X,Y,Z): ")
         print(self.limb_vertecies[5])
 
+# takes stored limb vertices and plots the data points using .plot() function, generating a wireframe representation
     def draw_limbs(self):
         limb_vectors = [[0, 0, 0]]
         for i, limb, in enumerate(self.limb_vertecies):
@@ -78,7 +85,8 @@ ax.set_zlim3d(0, WINDOW_SIZE)
 ax.set_xlabel('x (mm)')
 ax.set_ylabel('y (mm)')
 ax.set_zlabel('z (mm)')
-# robot.shift_body_rotation()
+
+#user input
 T1 = float(input("Enter angle 1 (deg): "))
 T2 = float(input("Enter angle 2 (deg): "))
 T3 = float(input("Enter angle 3 (deg): "))
