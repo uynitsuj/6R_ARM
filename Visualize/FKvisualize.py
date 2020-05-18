@@ -1,10 +1,5 @@
-import math
-
 import matplotlib.pyplot as plt
 from numpy import *
-from mpl_toolkits.mplot3d import Axes3D
-
-from pytictoc import TicToc
 
 
 # Homogeneous Transformation Matrices
