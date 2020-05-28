@@ -26,7 +26,7 @@ theta_4 = (theta_4 / 180) * pi  # theta 4 in radians
 theta_5 = (theta_5 / 180) * pi  # theta 5 in radians
 theta_6 = (theta_6 / 180) * pi  # theta 6 in radians
 
-# DH Parameter Table for 3 DOF Planar
+# DH Parameter Table for 6 DOF
 PT = [[theta_1, pi / 2, 0, a1],
       [theta_2, 0, a3, a4 - a2],
       [theta_3, 0, a5, 0],
