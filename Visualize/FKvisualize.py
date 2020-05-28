@@ -68,6 +68,8 @@ class SixR:
         print(self.limb_vertecies[5])
         print("Joint 5 Position (X,Y,Z): ")
         print(self.limb_vertecies[4])
+        print("Joint 4 Position (X,Y,Z): ")
+        print(self.limb_vertecies[3])
 
     # takes stored limb vertices and plots the data points using .plot() function, generating a wireframe representation
     def draw_limbs(self):
