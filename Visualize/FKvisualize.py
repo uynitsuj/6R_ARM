@@ -45,7 +45,6 @@ class SixR:
         # self.fk determines link i frame and link i-1 frame transformation matrices
         self.fk = []
         for i in range(6):
-            print(i)
             self.fk.append(transform_matrix2(self.pt[i][0]/180*pi,self.pt[i][1],self.pt[i][2],self.pt[i][3]))
 
         # determination of transformation matrix for link i frame relative to base frame
@@ -70,7 +69,7 @@ class SixR:
         print(self.limb_vertecies[4])
         print("Joint 4 Position (X,Y,Z): ")
         print(self.limb_vertecies[3])
-
+        print(self.H0_6)
     # takes stored limb vertices and plots the data points using .plot() function, generating a wireframe representation
     def draw_limbs(self):
         limb_vectors = [[0, 0, 0]]
