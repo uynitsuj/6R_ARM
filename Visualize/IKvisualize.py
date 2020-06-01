@@ -113,7 +113,6 @@ class SixR:
             P1_4xzSQR = float(square(P1_4[0][0]) + square(P1_4[2][0]))
             if -1 <= ((P1_4xzSQR - square(self.a2) - square(self.a3)) / (2 * self.a2 * self.a3)) <= 1:
                 self.t3.append(math.acos(((P1_4xzSQR - square(self.a2) - square(self.a3)) / (2 * self.a2 * self.a3))))
-                print("t3" + str(g) + "added")
                 self.t2.append(math.atan2(-P1_4[2][0], -P1_4[0][0]) - math.asin(
                     -self.a3 * sin(self.t3[len(self.t2)]) / sqrt(P1_4xzSQR)))
                 H1_2 = transform_matrix2(self.t2[len(self.t2) - 1], self.PT[1][1], self.PT[1][2], self.PT[1][3])
@@ -125,7 +124,6 @@ class SixR:
                 self.t4.append(math.atan2(H3_4[1][0], H3_4[0][0]))
 
                 self.t3.append(-math.acos(((P1_4xzSQR - square(self.a2) - square(self.a3)) / (2 * self.a2 * self.a3))))
-                print("t3" + str(g) + "added")
                 self.t2.append(math.atan2(-P1_4[2][0], -P1_4[0][0]) - math.asin(
                     -self.a3 * sin(self.t3[len(self.t2)]) / sqrt(P1_4xzSQR)))
                 H1_2 = transform_matrix2(self.t2[len(self.t2) - 1], self.PT[1][1], self.PT[1][2], self.PT[1][3])
@@ -161,7 +159,7 @@ class SixR:
             P1_4xzSQR = float(square(P1_4[0][0]) + square(P1_4[2][0]))
             if -1 <= ((P1_4xzSQR - square(self.a2) - square(self.a3)) / (2 * self.a2 * self.a3)) <= 1:
                 self.t3.append(math.acos(((P1_4xzSQR - square(self.a2) - square(self.a3)) / (2 * self.a2 * self.a3))))
-                print("t3" + str(f) + "added")
+                print("t3 " + str(f*2) + " added")
                 self.t2.append(math.atan2(-P1_4[2][0], -P1_4[0][0]) - math.asin(
                     -self.a3 * sin(self.t3[len(self.t2)]) / sqrt(P1_4xzSQR)))
                 H1_2 = transform_matrix2(self.t2[len(self.t2) - 1], self.PT[1][1], self.PT[1][2], self.PT[1][3])
@@ -173,7 +171,7 @@ class SixR:
                 self.t4.append(math.atan2(H3_4[1][0], H3_4[0][0]))
 
                 self.t3.append(-math.acos(((P1_4xzSQR - square(self.a2) - square(self.a3)) / (2 * self.a2 * self.a3))))
-                print("t3" + str(f) + "added")
+                print("t3 " + str(f*2+1) + " added")
                 self.t2.append(math.atan2(-P1_4[2][0], -P1_4[0][0]) - math.asin(
                     -self.a3 * sin(self.t3[len(self.t2)]) / sqrt(P1_4xzSQR)))
                 H1_2 = transform_matrix2(self.t2[len(self.t2) - 1], self.PT[1][1], self.PT[1][2], self.PT[1][3])
@@ -333,7 +331,7 @@ Y = [0, 0, 15.3747724, 30.7495448, 30.7495448, 40.5486362, 40.5486362]
 Z = [0, 13.390245, 13.390245, 13.390245, 13.390245, 13.390245, 19.272123]
 
 '''
-WINDOW_SIZE = 600
+WINDOW_SIZE = 500
 ax.set_xlim3d(-WINDOW_SIZE / 2, WINDOW_SIZE / 2)
 ax.set_ylim3d(-WINDOW_SIZE / 2, WINDOW_SIZE / 2)
 ax.set_zlim3d(0, WINDOW_SIZE)
@@ -353,7 +351,7 @@ y = float(-1.7e+02)
 r31 = 5.08022222e-01
 r32 = 8.20529125e-01
 r33 = -2.62002630e-01
-z = float(2.5e+02)
+z = float(2.6e+02)
 # user input
 """
 r11 = float(input("Enter R11: "))
@@ -374,35 +372,14 @@ robot = SixR(ax, H06=(r11, r12, r13, x, r21, r22, r23, y, r31, r32, r33, z))
 robot.IK()
 try:
     robot.draw_limbs(tbn=1)
-except():
-    print("Out of config space")
-try:
     robot.draw_limbs(tbn=2)
-except():
-    print("Out of config space")
-try:
     robot.draw_limbs(tbn=3)
-except():
-    print("Out of config space")
-try:
     robot.draw_limbs(tbn=4)
-except():
-    print("Out of config space")
-try:
     robot.draw_limbs(tbn=5)
-except():
-    print("Out of config space")
-try:
     robot.draw_limbs(tbn=6)
-except():
-    print("Out of config space")
-try:
     robot.draw_limbs(tbn=7)
-except():
-    print("Out of config space")
-try:
     robot.draw_limbs(tbn=8)
-except():
+except IndexError:
     print("Out of config space")
 
 plt.show()
