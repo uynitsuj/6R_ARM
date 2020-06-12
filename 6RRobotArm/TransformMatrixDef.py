@@ -4,8 +4,8 @@ import numpy as np
 
 # DH Parameter Table for 6 DOF in mm
 d1 = 133.90245
-a2 = 153.747724
-a3 = 153.747724
+a2 = 102.947724
+a3 = 102.947724
 d4 = 62.768226
 d5 = 97.990914
 d6 = 58.81878

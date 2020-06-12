@@ -1,9 +1,11 @@
 from numpy import *  # imports all function so we don't have to use np.function()
+from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
 import math
 import numpy as np
 
 
+# transformation matrix via Denavit-Hartenberg convention
 def transform_matrix2(ti, alpha_i_m1, a_i_m1, di):
     return [[cos(ti), -sin(ti), 0, a_i_m1],
             [sin(ti) * cos(alpha_i_m1), cos(ti) * cos(alpha_i_m1), -sin(alpha_i_m1), -sin(alpha_i_m1) * di],
@@ -16,24 +18,27 @@ class SixR:
     def __init__(self, ax, H06=(1, 0, 0, -3.07495448e+02, 0, 0, -1, -1.21587006e+02, 0, 1, 0, 3.59115360e+01)):
         self.ax = ax
         self.d1 = 133.90245
-        self.a2 = 153.747724
-        self.a3 = 153.747724
+        self.a2 = 102.947724
+        self.a3 = 102.947724
         self.d4 = 62.768226
         self.d5 = 97.990914
         self.d6 = 58.81878
         self.H06 = H06
 
+        # Final frame in reference to the base frame
         self.H0_6 = [[H06[0], H06[1], H06[2], H06[3]],
                      [H06[4], H06[5], H06[6], H06[7]],
                      [H06[8], H06[9], H06[10], H06[11]],
                      [0, 0, 0, 1]]
 
+        # Denavit Hartenberg Table
         self.PT = [[0, 0, 0, self.d1],
                    [0, pi / 2, 0, 0],
                    [0, 0, -self.a2, 0],
                    [0, 0, -self.a3, self.d4],
                    [0, pi / 2, 0, self.d5],
                    [0, -pi / 2, 0, self.d6]]
+        # Angle variable list init
         self.t1 = []
         self.t2 = []
         self.t3 = []
@@ -41,6 +46,7 @@ class SixR:
         self.t5 = []
         self.t6 = []
 
+    # Inverse Kinematics method
     def IK(self):
 
         Md6 = [[0],
@@ -52,6 +58,7 @@ class SixR:
         R = (sqrt(square(P0_5[1][0]) + square(P0_5[0][0])))
 
         val = math.atan2(P0_5[1][0], P0_5[0][0]) + math.acos(self.d4 / R) + pi / 2
+        # Angles get added to list
         if -0.005 < val < 0.005:
             self.t1.append(0)
         else:
@@ -134,7 +141,7 @@ class SixR:
                 H3_4 = dot(linalg.inv(H2_3), H2_4)
                 self.t4.append(math.atan2(H3_4[1][0], H3_4[0][0]))
             else:
-                print("bruh")
+                print("Not Added")
 
         for f in range(2, 4):
             H0_1 = transform_matrix2(self.t1[1], self.PT[0][1], self.PT[0][2], self.PT[0][3])
@@ -159,7 +166,7 @@ class SixR:
             P1_4xzSQR = float(square(P1_4[0][0]) + square(P1_4[2][0]))
             if -1 <= ((P1_4xzSQR - square(self.a2) - square(self.a3)) / (2 * self.a2 * self.a3)) <= 1:
                 self.t3.append(math.acos(((P1_4xzSQR - square(self.a2) - square(self.a3)) / (2 * self.a2 * self.a3))))
-                print("t3 " + str(f*2) + " added")
+                print("t3 " + str(f * 2) + " added")
                 self.t2.append(math.atan2(-P1_4[2][0], -P1_4[0][0]) - math.asin(
                     -self.a3 * sin(self.t3[len(self.t2)]) / sqrt(P1_4xzSQR)))
                 H1_2 = transform_matrix2(self.t2[len(self.t2) - 1], self.PT[1][1], self.PT[1][2], self.PT[1][3])
@@ -171,7 +178,7 @@ class SixR:
                 self.t4.append(math.atan2(H3_4[1][0], H3_4[0][0]))
 
                 self.t3.append(-math.acos(((P1_4xzSQR - square(self.a2) - square(self.a3)) / (2 * self.a2 * self.a3))))
-                print("t3 " + str(f*2+1) + " added")
+                print("t3 " + str(f * 2 + 1) + " added")
                 self.t2.append(math.atan2(-P1_4[2][0], -P1_4[0][0]) - math.asin(
                     -self.a3 * sin(self.t3[len(self.t2)]) / sqrt(P1_4xzSQR)))
                 H1_2 = transform_matrix2(self.t2[len(self.t2) - 1], self.PT[1][1], self.PT[1][2], self.PT[1][3])
@@ -182,7 +189,7 @@ class SixR:
                 H3_4 = dot(linalg.inv(H2_3), H2_4)
                 self.t4.append(math.atan2(H3_4[1][0], H3_4[0][0]))
             else:
-                print("bruh")
+                print("Not Added")
 
         print("\n")
         print("Theta 1: ")
@@ -214,20 +221,16 @@ class SixR:
         for g in self.t4:
             print(g / pi * 180)
 
+    # determination of arm pose vertices via forward kinematics, given angle vals
     def draw_limbs(self, tbn=0):
+
         t1 = 0
         t2 = 0
         t3 = 0
         t4 = 0
         t5 = 0
         t6 = 0
-
-        pt = [[t1, 0, 0, self.d1],
-              [t2, pi / 2, 0, 0],
-              [t3, 0, -self.a2, 0],
-              [t4, 0, -self.a3, self.d4],
-              [t5, pi / 2, 0, self.d5],
-              [t6, -pi / 2, 0, self.d6]]
+        # pose angle combinations
         if tbn == 1:
             t1 = self.t1[0]
             t2 = self.t2[0]
@@ -284,7 +287,7 @@ class SixR:
             t4 = self.t4[7]
             t5 = self.t5[3]
             t6 = self.t6[3]
-
+        # Forward Kinematics Denavit Hartenberg Table
         pt = [[t1, 0, 0, self.d1],
               [t2, pi / 2, 0, 0],
               [t3, 0, -self.a2, 0],
@@ -347,11 +350,11 @@ x = float(-1e+02)
 r21 = 5.93911746e-02
 r22 = -3.36824089e-01
 r23 = -9.39692621e-01
-y = float(-1.7e+02)
+y = float(-1.2e+02)
 r31 = 5.08022222e-01
 r32 = 8.20529125e-01
 r33 = -2.62002630e-01
-z = float(2.6e+02)
+z = float(2e+02)
 # user input
 """
 r11 = float(input("Enter R11: "))

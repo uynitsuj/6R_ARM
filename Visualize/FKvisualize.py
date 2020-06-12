@@ -28,8 +28,8 @@ class SixR:
     def __init__(self, ax, theta=(90, 0, 0, 90, 90, 0)):
         self.ax = ax
         self.d1 = 133.90245
-        self.a2 = 153.747724
-        self.a3 = 153.747724
+        self.a2 = 102.947724
+        self.a3 = 102.947724
         self.d4 = 62.768226
         self.d5 = 97.990914
         self.d6 = 58.81878

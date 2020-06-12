@@ -4,9 +4,9 @@ from numpy import *  # imports all function so we don't have to use np.function(
 # a = [5.27175, 0.92898, 6.05306, 2.31570, 6.05306, 3.85791, 3.85791, 2.3157]
 a1 = 13.390245  # length of link a1 in cm
 a2 = 2.3596092  # length of link a2 in cm
-a3 = 15.3747724  # length of link a3 in cm
+a3 = 10.2947724  # length of link a3 in cm
 a4 = 5.881878  # length of link a4 in cm
-a5 = 15.3747724  # length of link a5 in cm
+a5 = 10.2947724  # length of link a5 in cm
 a6 = 9.7990914  # length of link a6 in cm
 a7 = 9.7990914  # length of link a7 in cm
 a8 = 5.881878  # length of link a8 in cm
