@@ -384,5 +384,3 @@ try:
     robot.draw_limbs(tbn=8)
 except IndexError:
     print("Out of config space")
-
-plt.show()
