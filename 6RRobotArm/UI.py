@@ -627,15 +627,3 @@ window = tk.Tk()
 app = Application(window)
 window.wm_title("Robot Control Interface")
 window.mainloop()
-
-'''
-while True:
-    i = input("input(on/off): ").strip()
-    if i == 'done':
-        print('finished program')
-        break
-    serialcomm.write((i+'\n').encode())
-    time.sleep(0.2)
-    print(serialcomm.readline().decode('ascii'))
-serialcomm.close()
-'''

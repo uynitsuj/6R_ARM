@@ -63,13 +63,7 @@ class SixR:
                                [self.H0_5[0][3], self.H0_5[1][3], self.H0_5[2][3]],
                                [self.H0_6[0][3], self.H0_6[1][3], self.H0_6[2][3]],
                                ]
-        print("End Effector Position (X,Y,Z): ")
-        print(self.limb_vertecies[5])
-        print("Joint 5 Position (X,Y,Z): ")
-        print(self.limb_vertecies[4])
-        print("Joint 4 Position (X,Y,Z): ")
-        print(self.limb_vertecies[3])
-        print(self.H0_6)
+
     # takes stored limb vertices and plots the data points using .plot() function, generating a wireframe representation
     def draw_limbs(self):
         limb_vectors = [[0, 0, 0]]
@@ -80,34 +74,3 @@ class SixR:
         y_data = [vector[1] for vector in limb_vectors]
         z_data = [vector[2] for vector in limb_vectors]
         self.ax.plot(x_data, y_data, z_data)
-
-
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-'''
-X = [0, 0, 3.5222688000000013, 3.522268800000002, -6.276822599999997, -6.2768225999999965, -6.276822599999997]
-Y = [0, 0, 15.3747724, 30.7495448, 30.7495448, 40.5486362, 40.5486362]
-Z = [0, 13.390245, 13.390245, 13.390245, 13.390245, 13.390245, 19.272123]
-
-'''
-WINDOW_SIZE = 1000
-ax.set_xlim3d(-WINDOW_SIZE / 2, WINDOW_SIZE / 2)
-ax.set_ylim3d(-WINDOW_SIZE / 2, WINDOW_SIZE / 2)
-ax.set_zlim3d(0, WINDOW_SIZE)
-
-ax.set_xlabel('x (mm)')
-ax.set_ylabel('y (mm)')
-ax.set_zlabel('z (mm)')
-
-# user input
-T1 = float(input("Enter angle 1 (deg): "))
-T2 = float(input("Enter angle 2 (deg): "))
-T3 = float(input("Enter angle 3 (deg): "))
-T4 = float(input("Enter angle 4 (deg): "))
-T5 = float(input("Enter angle 5 (deg): "))
-T6 = float(input("Enter angle 6 (deg): "))
-
-robot = SixR(ax, theta=(T1, T2, T3, T4, T5, T6))
-robot.draw_limbs()
-
-plt.show()
