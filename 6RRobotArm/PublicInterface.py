@@ -2,7 +2,6 @@ import tkinter as tk
 import serial
 import time
 from numpy import *
-from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 from matplotlib.figure import Figure
