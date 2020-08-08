@@ -6,7 +6,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 from matplotlib.figure import Figure
-
+'''
 serialcomm = serial.Serial('COM7', 115200)
 serialcomm.bytesize = serial.EIGHTBITS
 serialcomm.parity = serial.PARITY_NONE
@@ -59,7 +59,7 @@ def mvmt(C1, C2, C3, C4, C5, C6):
     serialcomm.write((i + '\n').encode())
     print(serialcomm.readline().decode('ascii'))
     time.sleep(t)
-
+'''
 
 def transform_matrix(i, DHT):
     return [
@@ -1009,7 +1009,7 @@ class Application(tk.Frame):
         C4 = str(int(-(float(self.T4.get("1.0", tk.END)) - float(self.previousPoseT4["text"])) * 7680 / 360))
         C5 = str(int(-(float(self.T5.get("1.0", tk.END)) - float(self.previousPoseT5["text"])) * 7680 / 360))
         C6 = str(int((float(self.T6.get("1.0", tk.END)) - float(self.previousPoseT6["text"])) * 7680 / 360))
-        mvmt(C1=C1, C2=C2, C3=C3, C4=C4, C5=C5, C6=C6)
+        #mvmt(C1=C1, C2=C2, C3=C3, C4=C4, C5=C5, C6=C6)
 
         self.previousPoseT1["text"] = float(self.T1.get("1.0", tk.END))
         self.previousPoseT2["text"] = float(self.T2.get("1.0", tk.END))
